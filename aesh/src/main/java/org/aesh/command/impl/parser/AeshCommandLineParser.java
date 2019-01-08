@@ -39,6 +39,7 @@ import org.aesh.utils.Config;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.aesh.command.map.MapCommand;
 import org.aesh.command.map.MapCommandPopulator;
 import org.aesh.command.map.MapProcessedCommandBuilder.MapProcessedCommand;
@@ -223,6 +224,37 @@ public class AeshCommandLineParser<C extends Command> implements CommandLinePars
         }
         else
             return processedCommand.printHelp();
+    }
+
+    @Override
+    public String printDescription() {
+        List<CommandLineParser<C>> parsers = getChildParsers();
+        if (parsers != null && parsers.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(processedCommand.name())
+                    .append(" : ");
+            sb.append(processedCommand.printDescription())
+                    .append(Config.getLineSeparator());
+            for (int i = 0; i < parsers.size(); i++) {
+                CommandLineParser<C> parser = parsers.get(i);
+                sb.append("    ")
+                        .append(parser.getProcessedCommand().name())
+                        .append(" : ");
+                if (!parser.getProcessedCommand().getOptions().isEmpty()) {
+                    sb.append("    ");
+                    sb.append(parser.getProcessedCommand().printDescription(8));
+                } else {
+                    sb.append(parser.getProcessedCommand().description());
+                }
+                if (parsers.size() > i + 1) {
+                    sb.append(Config.getLineSeparator());
+                }
+
+            }
+
+            return sb.toString();
+        }
+        return processedCommand.name() + " : " + processedCommand.printDescription();
     }
 
     /**

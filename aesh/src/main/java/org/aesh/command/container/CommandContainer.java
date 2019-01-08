@@ -58,6 +58,13 @@ public interface CommandContainer<C extends Command<CI>,CI extends CommandInvoca
     String printHelp(String childCommandName);
 
     /**
+     * @param childCommandName (for group commands)
+     * @return one-line description of the command
+     */
+    String printDescription(String childCommandName);
+
+
+    /**
      * @return error message
      */
     String getBuildErrorMessage();

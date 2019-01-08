@@ -91,12 +91,17 @@ public interface CommandRuntime<C extends Command<CI>,CI extends CommandInvocati
     /**
      *
      * @param line input line
+     * @param description print description or else the full command help
      * @return condensed information regarding the specific command
      */
-    default String commandInfo(String line) {
+    default String commandInfo(String line, boolean description) {
         try {
             String name = Parser.findFirstWord(line);
-            return getCommandRegistry().getCommand(name, line).printHelp(name);
+            if (!description) {
+                return getCommandRegistry().getCommand(name, line).printHelp(name);
+            } else {
+                return getCommandRegistry().getCommand(name, line).printDescription(name);
+            }
         }
         catch (CommandNotFoundException e) {
             return null;

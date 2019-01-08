@@ -75,4 +75,19 @@ public abstract class DefaultCommandContainer<C extends Command<CI>, CI extends 
        else
            return getParser().printHelp();
     }
+
+    @Override
+    public String printDescription(String childCommandName) {
+        if(getParser().isGroupCommand() && childCommandName.contains(" ")) {
+            String[] names = childCommandName.split(" ");
+            if(names.length > 1 && names[1].length() > 0) {
+                CommandLineParser child = getParser().getChildParser(names[1]);
+                if(child != null)
+                    return child.printDescription();
+            }
+            return "Child command "+names[1]+" not found.";
+        }
+        else
+            return getParser().printDescription();
+    }
 }

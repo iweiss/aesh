@@ -341,6 +341,17 @@ public class ReadlineConsole implements Console, Consumer<Connection> {
         return "";
     }
 
+    @Override
+    public String commandDescription(String commandName) {
+        try (CommandContainer commandContainer = commandResolver.resolveCommand(commandName)) {
+            if (commandContainer != null) {
+                return commandContainer.printDescription(commandName);
+            }
+        } catch (Exception e) { // ignored
+        }
+        return "";
+    }
+
     public void addCompletion(Completion completion) {
         if(completions == null)
             completions = new ArrayList<>();

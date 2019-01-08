@@ -100,6 +100,11 @@ public interface CommandLineParser<C extends Command> {
     String printHelp();
 
     /**
+     * Returns the description of the command
+     */
+    String printDescription();
+
+    /**
      * Parse a command line with the defined command as base of the rules.
      * If any options are found, but not defined in the command object an
      * CommandLineParserException will be thrown.

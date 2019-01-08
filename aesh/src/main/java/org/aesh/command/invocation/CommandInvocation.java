@@ -61,6 +61,11 @@ public interface CommandInvocation {
     String getHelpInfo(String commandName);
 
     /**
+     * @return the command single-line description
+     */
+    String getCommandDescription(String commandName);
+
+    /**
      * Stop the console and end the session
      */
     void stop();

@@ -85,6 +85,11 @@ public final class AeshCommandInvocation<C extends Command<AeshCommandInvocation
     }
 
     @Override
+    public String getCommandDescription(String commandName) {
+        return console.commandDescription(commandName);
+    }
+
+    @Override
     public void stop() {
         console.stop();
     }

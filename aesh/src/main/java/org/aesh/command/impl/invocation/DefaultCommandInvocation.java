@@ -71,7 +71,12 @@ public class DefaultCommandInvocation<C extends Command<DefaultCommandInvocation
 
     @Override
     public String getHelpInfo(String commandName) {
-        return processor.commandInfo(commandName);
+        return processor.commandInfo(commandName, false);
+    }
+
+    @Override
+    public String getCommandDescription(String commandName) {
+        return processor.commandInfo(commandName, true);
     }
 
     @Override

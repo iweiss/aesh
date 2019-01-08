@@ -38,6 +38,8 @@ public interface Console {
 
     String helpInfo(String commandName);
 
+    String commandDescription(String commandName);
+
     void read(Connection conn, Readline readline);
 
     void read();

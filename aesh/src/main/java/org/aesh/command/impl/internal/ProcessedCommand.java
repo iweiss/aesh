@@ -410,6 +410,42 @@ public class ProcessedCommand<C extends Command> {
         return "Usage: "+ name()+" "+ description()+ Config.getLineSeparator()+sb.toString();
     }
 
+    /**
+     * @return a one-line description of the command
+     */
+    public String printDescription(int offset) {
+        if (getOptions().isEmpty()) {
+            return description();
+        }
+
+        int maxLength = 0;
+        int width = 80;
+        List<ProcessedOption> opts = getOptions();
+
+        for (ProcessedOption o : opts)
+            if (o.getFormattedLength() > maxLength)
+                maxLength = o.getFormattedLength();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < opts.size(); i++) {
+            ProcessedOption o = opts.get(i);
+            sb.append(o.getFormattedOption(offset, maxLength + 4, width));
+
+            if (opts.size() > i + 1) {
+                sb.append(Config.getLineSeparator());
+            }
+        }
+
+        return description() + Config.getLineSeparator() + sb.toString();
+    }
+
+    /**
+     * @return a one-line description of the command
+     */
+    public String printDescription() {
+        return printDescription(4);
+    }
+
     @Override
     public String toString() {
         return "ProcessedCommand{" +

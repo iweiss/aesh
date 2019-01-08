@@ -120,6 +120,11 @@ class FooCommandInvocation implements CommandInvocation {
     }
 
     @Override
+    public String getCommandDescription(String commandName) {
+        return commandInvocation.getCommandDescription(commandName);
+    }
+
+    @Override
     public void stop() {
         commandInvocation.stop();
     }
